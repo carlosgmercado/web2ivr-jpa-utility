@@ -10,12 +10,14 @@
 		</layout>
 	</appender>
 	
-	<appender name="util" class="org.apache.log4j.FileAppender">
-        <param name="File" value="c://util.log" />
-        <param name="Append" value="true" />
-        <layout class="org.apache.log4j.PatternLayout">
-          <param name="ConversionPattern" value="%t %-5p %c{2} - %m%n"/>
-        </layout>           
+	<appender name="util" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="c://util.log"/>
+		<param name="Append" value="true"/>
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss} %-5p
+		%c{2} - %m%n"/> 
+		</layout>        
      </appender>
 	
 	<!-- Application Loggers -->

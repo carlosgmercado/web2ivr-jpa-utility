@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
 import java.lang.Thread;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -13,7 +15,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cm2labs.web2ivr.domain.BatchDetail;
 import com.cm2labs.web2ivr.domain.BatchDetails;
+import com.cm2labs.web2ivr.service.jpa.BatchDetailServiceImpl;
 import com.voxeo.tropo.Tropo;
+import com.voxeo.tropo.TropoLaunchResult;
 
 
 public class RestfulClient {
@@ -21,6 +25,7 @@ public class RestfulClient {
 	private static final String URL_GET_BATCHDETAIL_PHONE = "http://localhost:8080/Web2Ivr/restful/batchdetail/{phone}";
 	private static final String URL_TO_UPDATE_BATCHDETAIL = "http://localhost:8080/Web2Ivr/restful/batchdetail/{id}";
 	private static Tropo tropo;
+	private static Log log = LogFactory.getLog(RestfulClient.class);
 	
 	public static void main(String[] args) {
 		
@@ -36,7 +41,7 @@ public class RestfulClient {
 		int i=1;
 		for (BatchDetail batchdetail: batchdetails.getBatchdetails()) {
 			
-			if (i%100 == 0){
+			if (i%100== 0){
 				try {
 					System.out.println("Running total called :"+i);
 				Thread.sleep(200000);
@@ -74,7 +79,9 @@ System.out.println("Finished with :"+i+" called");
 		String token = "1346b5c74535014e9c6b168876c4e192f9e91631e456a5acd942921e3fe201fdd7cae0293f7620dd50184a35";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("numberToDial", batchdetail.phone2Tropo());
-		tropo.launchSession(token, params);
+		TropoLaunchResult result = tropo.launchSession(token, params);
+		log.info(batchdetail.phone2Tropo()+" session id: " + result.getId());
+		
 		
 		
 	}

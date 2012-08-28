@@ -78,7 +78,7 @@ public class ReadWithScanner {
 			batchdetail = restTemplate.getForObject(URL_GET_BATCHDETAIL_PHONE, BatchDetail.class, tropo2Phone(matcher.group(2)));			
 			batchdetail.setStatus(matcher.group(1));
 			restTemplate.put(URL_TO_UPDATE_BATCHDETAIL, batchdetail, batchdetail.getId());
-			//System.out.println(batchdetail);
+			System.out.print("*");
 	  }
 
   }
